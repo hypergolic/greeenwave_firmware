@@ -40,14 +40,14 @@ root/thinkgreen.  this works on all firmware versions even the ones with uboot i
 as I only have 1 unit to test it on, I've only tested downgrading my specific unit, so I'm not sure what other variables may be involved, but either way this will reply statically with a correct checksum and file URL.
 
 
-#FIRMWARE MODIFICATIONS:
+* FIRMWARE MODIFICATIONS:
 
 Unpacking and Rebuilding the u-boot firmware Image:
 Here's my notes on making modifications to the firmware, you will need uboot-tools and mksquashfs 4.0.
 
 There is a modified firmware image posted here, if you arent familure with bricking everything you own, then dont attempt to flash it!
 
-#Commands for unpacking:
+* Commands for unpacking:
 mkimage -l tcpfirm.bin 
 (get the sizes, binwalk works as well, calculate uboot headers and cut them off plus image markers)
 
