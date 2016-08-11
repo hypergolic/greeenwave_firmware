@@ -1,17 +1,16 @@
-NOTES:
+* NOTES:
 YOU CAN BRICK YOUR STUFF VERY EASILY, PLAY CAREFUL.
 Extracted rootfs + kernel is included in the rootfs.tar.bz2.
 if you want to modifiy it, be sure you have experience with uboot/uboot scripts, otherwise, its easy to brick and a pain to recover, or if you're like me and bricked
 it in the first 5 minutes of owning it, these files can help you recover it!
 
-TODO:
-Write this how to better.
+* TODO:
+Write this how to better, format it so its readable. 
 
-DONE:
-** Firmware unpacking and repacking instructions added at the end of this README file explaining it, firmware images and modified firmware image added to the firmware_mods folder.
+* DONE:
+*Firmware unpacking and repacking instructions added at the end of this README file explaining it, firmware images and modified firmware image added to the firmware_mods folder.
 
-HOW TO DOWNGRADE:
-
+* HOW TO DOWNGRADE:
 Put the download folder and update.php files in a folder called "roxy", then use https.py to with a self signed .pem certificate (generate it with openssl or grab the .pem certs in the rootfs archive.)
 then redirect update.greenwavereality.com and update.greenwavereality.eu via spoofing on a local dns server and firewall rules to block both hosts once updated, as if it
 can contact the update serves again it will update its self, I just blocked all outgoing traffic from my lighting controller to the web.
@@ -41,14 +40,14 @@ root/thinkgreen.  this works on all firmware versions even the ones with uboot i
 as I only have 1 unit to test it on, I've only tested downgrading my specific unit, so I'm not sure what other variables may be involved, but either way this will reply statically with a correct checksum and file URL.
 
 
-FIRMWARE MODIFICATIONS:
+#FIRMWARE MODIFICATIONS:
 
 Unpacking and Rebuilding the u-boot firmware Image:
 Here's my notes on making modifications to the firmware, you will need uboot-tools and mksquashfs 4.0.
 
 There is a modified firmware image posted here, if you arent familure with bricking everything you own, then dont attempt to flash it!
 
-Commands for unpacking:
+#Commands for unpacking:
 mkimage -l tcpfirm.bin 
 (get the sizes, binwalk works as well, calculate uboot headers and cut them off plus image markers)
 
@@ -61,19 +60,19 @@ dd if=tcpfirm.bin of=image2_dtv bs=1 skip=12310612 count=7782
 [dev@notworking tcpmod]$ binwalk image0_kernel 
 
 DECIMAL       HEXADECIMAL     DESCRIPTION
---------------------------------------------------------------------------------
+\* -------------------------------------------------------------------------------- \*
 0             0x0             gzip compressed data, maximum compression, from Unix, last modified: 1970-01-01 00:00:00 (null date)
 
 [dev@notworking tcpmod]$ binwalk image1_sqfs 
 
 DECIMAL       HEXADECIMAL     DESCRIPTION
---------------------------------------------------------------------------------
+\* -------------------------------------------------------------------------------- \*
 0             0x0             Squashfs filesystem, little endian, version 4.0, compression:gzip, size: 10639101 bytes, 1456 inodes, blocksize: 131072 bytes, created: 2013-12-03 09:50:58
 
 [dev@notworking tcpmod]$ binwalk image2_dtv 
 
 DECIMAL       HEXADECIMAL     DESCRIPTION
---------------------------------------------------------------------------------
+\* -------------------------------------------------------------------------------- \*
 0             0x0             device tree image (dtb)
 
 [dev@notworking tcpmod]$ sudo unsquashfs image1_sqfs 
@@ -168,15 +167,14 @@ Contents:
 
 to finish it off follow the downgrade instructions, but change out the md5sum on roxy.php to match your new firmware image and replace the rootfs.bin firmware image there with yours.
 
-
-I have included my updated patched firmware (its a later version than the one i posted for downgrading, but has ssh renabled and the custom scripts mentioned above so enabling the webserver is of no issue.)
+I have included my updated patched firmware (its a later version than the one i posted for downgrading, but has ssh renabled and the custom scripts mentioned above so enabling the webserver is of no issue.), see the firmware_mod folder.
 ~ # cat /etc/version 
 3.0.39
 ~ # uname -a
 Linux lighting 3.5.3 #1 PREEMPT Tue Dec 3 10:44:29 CET 2013 ppc GNU/Linux
 ~ # 
 
-md5sums:
+* md5sums:
 4c448f9d9a2d8584ab5c0d4c6874af1e  tcpfirm.bin 			// original uboot image 
 b32f5c3b6528db3c3eb75a3604532a12  tcpmod_firmware.img 	// modified uboot image
 7896e1540e90f463551873ed8ea4b169  image0_kernel 		//original
